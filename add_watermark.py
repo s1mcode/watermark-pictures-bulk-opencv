@@ -69,10 +69,12 @@ def add_watermark_bulk(images_path):
         cv2.imwrite(img_path, img)
     print("Watermark added to all the images!")
 
+
 def main():
     pic_list = iter_pics(ROOT_PATH)
     print("Found {} pics".format(len(pic_list)))
     add_watermark_bulk(pic_list)
+
 
 if __name__ == "__main__":
     main()
