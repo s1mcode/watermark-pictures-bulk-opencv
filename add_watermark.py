@@ -4,7 +4,7 @@ import glob
 import os
 import random
 
-ROOT_PATH = r'D:\myTools\add-watermark\images'
+ROOT_PATH = r'D:\myTools\watermark-pictures-bulk\images'
 
 logo = cv2.imread("./mylogo.png")
 h_logo, w_logo, _ = logo.shape
@@ -24,7 +24,7 @@ def iter_pics(root_dir):
 def add_watermark_bulk(images_path):
     print("Adding watermark...")
     for index, img_path in enumerate(images_path):
-        print("Watermarking num {} pic".format(str(index + 1)))
+        print("Watermarking {0} of num {1} pic".format(str(len(images_path)), str(index + 1)))
         img = cv2.imread(img_path)
         h_img, w_img, _ = img.shape
 
@@ -35,6 +35,11 @@ def add_watermark_bulk(images_path):
         position_dict["center"]["center_y"] = int(h_img / 2)
         position_dict["center"]["center_x"] = int(w_img / 2)
 
+        # Put watermark on pic bottom_right
+        position_dict["bottom_left"] = {}
+        position_dict["bottom_left"]["center_y"] = int(h_img) - int(h_logo / 2)
+        position_dict["bottom_left"]["center_x"] = int(w_img) - int(w_logo / 2)
+
         # Put watermark on pic bottom_left
         position_dict["bottom_left"] = {}
         position_dict["bottom_left"]["center_y"] = int(h_img) - int(h_logo / 2)
@@ -44,6 +49,11 @@ def add_watermark_bulk(images_path):
         position_dict["top_right"] = {}
         position_dict["top_right"]["center_y"] = int(h_logo / 2)
         position_dict["top_right"]["center_x"] = int(w_img) - int(w_logo / 2)
+
+        # Put watermark on pic top_left
+        position_dict["top_left"] = {}
+        position_dict["top_left"]["center_y"] = int(h_logo / 2)
+        position_dict["top_left"]["center_x"] = int(w_logo / 2)
 
         # Get random position
         position = (random.sample(position_dict.keys(), 1))[0]
